@@ -102,15 +102,3 @@ def splash_screen():
         
         pygame.display.update()
         clock.tick(60)
-    
-if splash_screen() == True:
-    print("hej")
-
-elif splash_screen() == False:
-    pygame.quit()
-    quit()
-
-
-              
-           
-

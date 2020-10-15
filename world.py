@@ -1,5 +1,6 @@
 import pygame
 from pygame.surface import Surface
+from colors import *
 
 room_0_0 = {
     "walls": [
@@ -108,17 +109,15 @@ room_2_2 = {
 
 
 def get_surface(room):
-    black = 20, 20, 20
-    white = 255, 255, 255
     surface = Surface((800, 600))
-    surface.fill(white)
+    surface.fill(beige)
 
     for wall in room["walls"]:
-        pygame.draw.polygon(surface, black, wall)
+        pygame.draw.polygon(surface, dark_green, wall)
 
     if "ellipses" in room:
         for ellipse in room["ellipses"]:
-            pygame.draw.ellipse(surface, white, ellipse)
+            pygame.draw.ellipse(surface, beige, ellipse)
 
         surface.blit(surface, (0, 0))
 
