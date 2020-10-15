@@ -1,5 +1,6 @@
 import pygame
-from pygame.rect import Rect 
+from pygame.rect import Rect
+from colors import *
 #from pygame.locals import *
 #import sys
 
@@ -8,11 +9,6 @@ pygame.init()
 screen_width = 800
 screen_height = 600
     
-black = (0, 0, 0)
-white = (255, 255, 255)
-greybackground = (140, 155, 165)
-greybuttoninactive = (87, 102, 112)
-greybuttonactive = (102, 120, 131)
 x = (200)
 y = (40)
 
@@ -76,13 +72,13 @@ def splash_screen():
                 pygame.quit()
                 quit()
     
-        screenDisplay.fill(greybackground)
+        screenDisplay.fill(light_green)
         title(x,y)
         
        
                 
-        button_function(170, 300, 180, 80,greybuttoninactive,greybuttonactive)
-        button_function(450, 300, 180, 80,greybuttoninactive,greybuttonactive)
+        button_function(170, 300, 180, 80,dark_green,beige)
+        button_function(450, 300, 180, 80,dark_green,beige)
         #mousepos = pygame.mouse.get_pos()
         
         #if 170+180 > mouse[0] > 170 and 300+80 > mouse[1] > 300:
