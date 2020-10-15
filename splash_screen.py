@@ -19,6 +19,7 @@ x_q = (465)
 y_q = (287)
 
 screenDisplay = pygame.display.set_mode((screen_width,screen_height))
+backgroundPolygon = [(125, 50), (675, 50), (750, 125), (750, 475), (675, 550), (125, 550), (50, 475), (50, 125)]
 pygame.display.set_caption("PyScavanger")
 clock = pygame.time.Clock() 
 mainlogo = pygame.image.load("pyscavanger.png")
@@ -71,11 +72,10 @@ def splash_screen():
                 running = False
                 pygame.quit()
                 quit()
-    
-        screenDisplay.fill(light_green)
+
+        screenDisplay.fill(dark_green)
+        pygame.draw.polygon(screenDisplay, light_green, backgroundPolygon)
         title(x,y)
-        
-       
                 
         button_function(170, 300, 180, 80,dark_green,beige)
         button_function(450, 300, 180, 80,dark_green,beige)
