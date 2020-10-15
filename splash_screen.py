@@ -1,5 +1,5 @@
-
 import pygame
+from pygame.rect import Rect 
 #from pygame.locals import *
 #import sys
 
@@ -58,7 +58,17 @@ def button_function(x,y,w,h,ic,ac):
 def splash_screen():  
     running = True
     while running:
-    
+        start_rect = Rect(170, 300, 180, 80)
+        start_rect2 = Rect(450, 300, 180, 80)
+        mouse = pygame.mouse.get_pressed()
+        
+        if start_rect.collidepoint(pygame.mouse.get_pos()) and mouse[0]:
+            return True
+        
+        if start_rect2.collidepoint(pygame.mouse.get_pos()) and mouse[0]:
+            running = False
+            return False
+            
         for event in pygame.event.get():
         
             if event.type == pygame.QUIT:
@@ -69,9 +79,11 @@ def splash_screen():
         screenDisplay.fill(greybackground)
         title(x,y)
         
+       
+                
         button_function(170, 300, 180, 80,greybuttoninactive,greybuttonactive)
         button_function(450, 300, 180, 80,greybuttoninactive,greybuttonactive)
-        #mouse = pygame.mouse.get_pos()
+        #mousepos = pygame.mouse.get_pos()
         
         #if 170+180 > mouse[0] > 170 and 300+80 > mouse[1] > 300:
          #   pygame.draw.rect(screenDisplay, greybuttonactive, (170, 300, 180, 80))
@@ -89,9 +101,16 @@ def splash_screen():
         #quitt_logo(x_q,x_q)
         
         pygame.display.update()
-        clock.tick(30)
+        clock.tick(60)
     
-splash_screen()
-                
+if splash_screen() == True:
+    print("hej")
+
+elif splash_screen() == False:
+    pygame.quit()
+    quit()
+
+
+              
            
 
