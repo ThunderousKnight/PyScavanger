@@ -1,6 +1,7 @@
 import pygame
 from pygame.surface import Surface
 from colors import *
+from random import randint
 
 room_0_0 = {
     "walls": [
@@ -9,7 +10,11 @@ room_0_0 = {
             (125, 550), (50, 475), (50, 400), (0, 400), (0, 600), (800, 600), (800, 0)
         ]
     ],
-    "scrap_piles": [(350, 250)]
+    "scrap_piles": [],
+    "random_scrap_piles": {
+        "amount": 20,
+        "bounds": pygame.Rect((75, 75), (650, 450))
+    }
 }
 
 room_0_1 = {
@@ -17,7 +22,7 @@ room_0_1 = {
         [(0, 0), (800, 0), (800, 200), (400, 200), (400, 400), (800, 400), (800, 600), (0, 600)]
     ],
     "ellipses": [(25, 25, 750, 550)],
-    "scrap_piles": [(350, 250)]
+    "scrap_piles": [(350, 250), (450, 250), (350, 350), (450, 350)]
 }
 
 room_0_2 = {
@@ -31,7 +36,7 @@ room_0_2 = {
             (0, 600)
         ]
     ],
-    "scrap_piles": [(350, 250)]
+    "scrap_piles": [(150, 475), (300, 475)]
 }
 
 room_1_0 = {
@@ -43,7 +48,7 @@ room_1_0 = {
             (800, 400), (800, 600), (500, 600), (500, 550), (550, 550)
         ]
     ],
-    "scrap_piles": [(350, 250)]
+    "scrap_piles": [(725, 525), (225, 300)]
 }
 
 room_1_1 = {
@@ -51,7 +56,7 @@ room_1_1 = {
         [(0, 0), (0, 200), (50, 200), (50, 50), (750, 50), (750, 550), (500, 550), (500, 600), (800, 600), (800, 0)],
         [(0, 400), (50, 400), (50, 550), (250, 550), (250, 200), (300, 200), (300, 600), (0, 600)]
     ],
-    "scrap_piles": [(350, 250)]
+    "scrap_piles": [(150, 475), (625, 450)]
 }
 
 room_1_2 = {
@@ -62,7 +67,7 @@ room_1_2 = {
             (750, 200), (500, 200), (500, 250), (250, 250), (250, 150), (750, 150), (750, 0)
         ]
     ],
-    "scrap_piles": [(350, 250)]
+    "scrap_piles": [(625, 300), (375, 500)]
 }
 
 room_2_0 = {
@@ -76,7 +81,7 @@ room_2_0 = {
             (750, 50), (550, 50), (550, 200), (500, 200), (500, 0)
         ]
     ],
-    "scrap_piles": [(350, 250)]
+    "scrap_piles": [(150, 125), (150, 475), (650, 475), (650, 125)]
 }
 
 room_2_1 = {
@@ -90,7 +95,7 @@ room_2_1 = {
             (150, 300), (150, 150), (500, 150)
         ]
     ],
-    "scrap_piles": [(350, 250)]
+    "scrap_piles": [(700, 100), (700, 500), (250, 250)]
 }
 
 room_2_2 = {
@@ -104,8 +109,28 @@ room_2_2 = {
             (450, 150), (500, 150), (500, 550), (750, 550), (750, 0)
         ]
     ],
-    "scrap_piles": [(350, 250)]
+    "scrap_piles": [(325, 500), (475, 100)]
 }
+
+
+def spawn_random_scrap(amount, bounds):
+    scrap_piles = []
+
+    while len(scrap_piles) < amount:
+        should_add = True
+        scrap = pygame.Rect(randint(0, 800), randint(0, 600), 25, 25)
+
+        if not bounds.collidepoint(scrap.x, scrap.y):
+            should_add = False
+        else:
+            for existing_scrap in scrap_piles:
+                if pygame.Rect(existing_scrap, (25, 25)).colliderect(scrap):
+                    should_add = False
+
+        if should_add:
+            scrap_piles.append((scrap.x, scrap.y))
+
+    return scrap_piles
 
 
 def get_surface(room):
@@ -118,6 +143,14 @@ def get_surface(room):
     if "ellipses" in room:
         for ellipse in room["ellipses"]:
             pygame.draw.ellipse(surface, beige, ellipse)
+
+    if "random_scrap_piles" in room:
+        amount = room["random_scrap_piles"]["amount"]
+        bounds = room["random_scrap_piles"]["bounds"]
+        room["scrap_piles"] = spawn_random_scrap(amount, bounds)
+
+    for scrap_center in room["scrap_piles"]:
+        pygame.draw.circle(surface, dark_green, scrap_center, 12.5)
 
         surface.blit(surface, (0, 0))
 

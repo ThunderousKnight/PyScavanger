@@ -62,9 +62,11 @@ def splash_screen():
         mouse = pygame.mouse.get_pressed()
         
         if start_rect.collidepoint(pygame.mouse.get_pos()) and mouse[0]:
+            pygame.quit()
             return True
         
         if start_rect2.collidepoint(pygame.mouse.get_pos()) and mouse[0]:
+            pygame.quit()
             running = False
             return False
             
