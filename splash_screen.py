@@ -1,56 +1,58 @@
 import pygame
 from pygame.rect import Rect
 from colors import *
-#from pygame.locals import *
-#import sys
 
 pygame.init()
     
 screen_width = 800
 screen_height = 600
     
-x = (200)
-y = (40)
+x = 200
+y = 40
 
-x_s = (180)
-y_s = (290)
+x_s = 180
+y_s = 290
 
-x_q = (465)
-y_q = (287)
+x_q = 465
+y_q = 287
 
 screenDisplay = pygame.display.set_mode((screen_width,screen_height))
 backgroundPolygon = [(125, 50), (675, 50), (750, 125), (750, 475), (675, 550), (125, 550), (50, 475), (50, 125)]
 pygame.display.set_caption("PyScavanger")
 clock = pygame.time.Clock() 
-mainlogo = pygame.image.load("pyscavanger.png")
-startlogo = pygame.image.load("start.png")
-quittlogo = pygame.image.load("quit.png")
+mainlogo = pygame.image.load("resources/pyscavanger.png")
+startlogo = pygame.image.load("resources/start.png")
+quittlogo = pygame.image.load("resources/quit.png")
 
-def title(x,y):
-    screenDisplay.blit(mainlogo, (x,y))
-    
-def start_logo(x,y):
-    screenDisplay.blit(startlogo, (x_s,y_s))
 
-def quitt_logo(x,y):
-    screenDisplay.blit(quittlogo, (x_q,y_q))
-    
-def button_function(x,y,w,h,ic,ac):
+def title(x, y):
+    screenDisplay.blit(mainlogo, (x, y))
+
+
+def start_logo(x, y):
+    screenDisplay.blit(startlogo, (x_s, y_s))
+
+
+def quitt_logo(x, y):
+    screenDisplay.blit(quittlogo, (x_q, y_q))
+
+
+def button_function(x, y, w, h, ic, ac):
     mouse = pygame.mouse.get_pos()
         
     if x+w > mouse[0] > x and y+h > mouse[1] > y:
         pygame.draw.rect(screenDisplay, ac, (x, y, w, h))
     else:
         pygame.draw.rect(screenDisplay, ic, (x, y, w, h))
-        
-        
+
     if x+w > mouse[0] > x and y+h > mouse[1] > y:
         pygame.draw.rect(screenDisplay, ac, (x, y, w, h)) 
     else:
         pygame.draw.rect(screenDisplay, ic, (x, y, w, h))
             
-    start_logo(x_s,y_s)
-    quitt_logo(x_q,x_q)
+    start_logo(x_s, y_s)
+    quitt_logo(x_q, x_q)
+
 
 def splash_screen():  
     running = True
