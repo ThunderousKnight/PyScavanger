@@ -142,9 +142,6 @@ def update_world():
     if mutter_i == 4:
         mutter_i = 0
 
-    if world_i % 10 == 0:
-        print(mutter_i)
-
     return get_world()
 
 
