@@ -6,8 +6,11 @@ pygame.init()
     
 screen_width = 800
 screen_height = 600
-    
-x = 200
+
+playerimagex = 580
+playerimagey = 100
+
+x = 180
 y = 40
 
 x_s = 180
@@ -19,12 +22,15 @@ y_q = 287
 screenDisplay = pygame.display.set_mode((screen_width,screen_height))
 backgroundPolygon = [(125, 50), (675, 50), (750, 125), (750, 475), (675, 550), (125, 550), (50, 475), (50, 125)]
 pygame.display.set_caption("PyScavanger")
-clock = pygame.time.Clock() 
+clock = pygame.time.Clock()
 mainlogo = pygame.image.load("resources/pyscavanger.png")
 startlogo = pygame.image.load("resources/start.png")
 quittlogo = pygame.image.load("resources/quit.png")
+playerimgg = pygame.image.load("resources/player.png")
 
-
+def playerimage(x, y):
+    screenDisplay.blit(playerimgg, (playerimagex, playerimagey))
+ 
 def title(x, y):
     screenDisplay.blit(mainlogo, (x, y))
 
@@ -80,7 +86,8 @@ def splash_screen():
         screenDisplay.fill(dark_green)
         pygame.draw.polygon(screenDisplay, light_green, backgroundPolygon)
         title(x,y)
-                
+        playerimage(playerimagex, playerimagey)
+        
         button_function(170, 300, 180, 80,dark_green,beige)
         button_function(450, 300, 180, 80,dark_green,beige)
         #mousepos = pygame.mouse.get_pos()
