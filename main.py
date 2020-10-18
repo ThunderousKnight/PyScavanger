@@ -1,10 +1,13 @@
 from splash_screen import splash_screen
 from world import *
-
+from player import *
 
 def main():
     pygame.init()
-
+    global player_x
+    global player_y
+    global x_change
+    global y_change
     size = 800, 600
 
     screen = pygame.display.set_mode(size)
@@ -15,8 +18,21 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 quit()
-
-        screen.blit(world[1][1], (0, 0))
+            
+            if event.type == pygame.KEYDOWN:
+                x_change, y_change = player_move(event.key, (x_change, y_change))
+            
+            if event.type == pygame.KEYUP:
+                x_change, y_change = player_movit(event.key, (x_change, y_change))
+        
+        if player_x + x_change < screen_width - 25 and player_x + x_change > -5:
+            player_x += x_change
+        
+        if player_y + y_change < screen_height - 45 and player_y + y_change > -5:    
+            player_y += y_change
+                
+        screen.blit(world[0][0], (0, 0))
+        player(player_x,player_y, screen)
         pygame.display.flip()
         clock.tick(60)
 
