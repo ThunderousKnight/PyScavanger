@@ -3,6 +3,30 @@ from pygame.surface import Surface
 from colors import *
 from random import randint
 
+
+def spawn_random_scrap(amount, bounds):
+    scrap_piles = []
+
+    while len(scrap_piles) < amount:
+        should_add = True
+        scrap = pygame.Rect(randint(0, 800), randint(0, 600), 25, 25)
+
+        if not bounds.collidepoint(scrap.x, scrap.y):
+            should_add = False
+        else:
+            for existing_scrap in scrap_piles:
+                if pygame.Rect(existing_scrap, (25, 25)).colliderect(scrap):
+                    should_add = False
+
+        if should_add:
+            scrap_piles.append((scrap.x, scrap.y))
+
+    return scrap_piles
+
+
+world_i = 0
+mutter_i = 0
+
 room_0_0 = {
     "walls": [
         [
@@ -10,11 +34,7 @@ room_0_0 = {
             (125, 550), (50, 475), (50, 400), (0, 400), (0, 600), (800, 600), (800, 0)
         ]
     ],
-    "scrap_piles": [],
-    "random_scrap_piles": {
-        "amount": 20,
-        "bounds": pygame.Rect((75, 75), (650, 450))
-    }
+    "scrap_piles": spawn_random_scrap(amount=20, bounds=pygame.Rect((75, 75), (650, 450)))
 }
 
 room_0_1 = {
@@ -113,24 +133,19 @@ room_2_2 = {
 }
 
 
-def spawn_random_scrap(amount, bounds):
-    scrap_piles = []
+def update_world():
+    global mutter_i
+    global world_i
+    world_i = world_i + 1 if world_i < 41 else 1
+    mutter_i = mutter_i + 1 if world_i % 10 == 0 else mutter_i
 
-    while len(scrap_piles) < amount:
-        should_add = True
-        scrap = pygame.Rect(randint(0, 800), randint(0, 600), 25, 25)
+    if mutter_i == 4:
+        mutter_i = 0
 
-        if not bounds.collidepoint(scrap.x, scrap.y):
-            should_add = False
-        else:
-            for existing_scrap in scrap_piles:
-                if pygame.Rect(existing_scrap, (25, 25)).colliderect(scrap):
-                    should_add = False
+    if world_i % 10 == 0:
+        print(mutter_i)
 
-        if should_add:
-            scrap_piles.append((scrap.x, scrap.y))
-
-    return scrap_piles
+    return get_world()
 
 
 def get_surface(room):
@@ -144,15 +159,14 @@ def get_surface(room):
         for ellipse in room["ellipses"]:
             pygame.draw.ellipse(surface, beige, ellipse)
 
-    if "random_scrap_piles" in room:
-        amount = room["random_scrap_piles"]["amount"]
-        bounds = room["random_scrap_piles"]["bounds"]
-        room["scrap_piles"] = spawn_random_scrap(amount, bounds)
-
     for scrap_center in room["scrap_piles"]:
-        pygame.draw.circle(surface, dark_green, scrap_center, 12.5)
+        scrap = pygame.image.load(f"resources/mutter/mutter_{mutter_i}.png")
 
-        surface.blit(surface, (0, 0))
+        scrap.set_colorkey(beige)
+        scrap_rect = scrap.get_rect()
+        scrap_rect.x, scrap_rect.y = scrap_center
+
+        surface.blit(scrap, scrap_rect)
 
     return surface
 

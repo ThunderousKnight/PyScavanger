@@ -30,10 +30,11 @@ def main():
         
         if player_y + y_change < screen_height - 45 and player_y + y_change > -5:    
             player_y += y_change
-                
+
         screen.blit(world[0][0], (0, 0))
         player(player_x,player_y, screen)
         pygame.display.flip()
+        world = update_world()
         clock.tick(60)
 
 
