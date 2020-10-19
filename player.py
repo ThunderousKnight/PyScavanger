@@ -13,8 +13,12 @@ y_change = 0
 playerimg = pygame.image.load("resources/player.png")
 #screenDisplay = pygame.display.set_mode((screen_width,screen_height))
 
-def player(x,y,screen):
-    screen.blit(playerimg, (x,y))
+
+def draw_player(x, y, screen):
+    screen.fill((0, 0, 0, 0))
+    screen.blit(playerimg, (x, y))
+    return screen
+
 
 def player_move(key, xy):
     if key == pygame.K_LEFT:
@@ -28,6 +32,7 @@ def player_move(key, xy):
     else:
         return xy[0], xy[1]
 
+
 def player_movit(key, xy):
     if key == pygame.K_LEFT or key == pygame.K_RIGHT:
         return 0, xy[1]
@@ -35,6 +40,7 @@ def player_movit(key, xy):
         return xy[0], 0
     else:
         return xy[0], xy[1]
+
 
 #def spelare():
     #running = True

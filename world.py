@@ -145,9 +145,15 @@ def update_world():
     return get_world()
 
 
+def collide(obj1, obj2):
+    mask1 = pygame.mask.from_surface(obj1)
+    mask2 = pygame.mask.from_surface(obj2)
+
+    return mask1.overlap_mask(mask2, (0, 0)).centroid() != (0, 0)
+
+
 def get_surface(room):
     surface = Surface((800, 600))
-    surface.fill(beige)
 
     for wall in room["walls"]:
         pygame.draw.polygon(surface, dark_green, wall)
