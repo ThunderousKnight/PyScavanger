@@ -9,10 +9,15 @@ player_x = (400)
 player_y = (300)
 x_change = 0
 y_change = 0
+black = (0, 0, 0)
 
 playerimg = pygame.image.load("resources/player.png")
 #screenDisplay = pygame.display.set_mode((screen_width,screen_height))
 
+def score(score, scren):
+    smallfont = pygame.font.SysFont("arial", 20)
+    text = smallfont.render("Score: "+str(score), True, black)
+    scren.blit(text, [0,0])
 
 def draw_player(x, y, screen):
     screen.fill((0, 0, 0, 0))

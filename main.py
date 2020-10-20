@@ -42,6 +42,7 @@ def main():
         screen.blit(world[0][0], (0, 0))
         player = draw_player(player_x, player_y, player)
         screen.blit(player, (0, 0))
+        score(5, screen)
         pygame.display.flip()
         world = update_world()
         screen.fill((beige[0], beige[1], beige[2], 0))
