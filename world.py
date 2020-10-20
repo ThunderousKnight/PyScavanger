@@ -233,6 +233,7 @@ def get_surface(room):
 
         room["scrap"].append(scrap_rect)
         surface.blit(scrap, scrap_rect)
+        
 
     return surface
 
