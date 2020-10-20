@@ -64,10 +64,10 @@ room_0_2 = {
 
 room_1_0 = {
     "walls": [
-        [(0, 0), (0, 50), (100, 50), (100, 500), (150, 500), (150, 150), (750, 150), (750, 200), (800, 200), (800, 0)],
+        [(0, 0), (0, 40), (100, 40), (100, 490), (150, 490), (150, 150), (750, 150), (750, 200), (800, 200), (800, 0)],
         [(0, 100), (50, 100), (50, 550), (300, 550), (300, 600), (0, 600)],
         [
-            (550, 450), (600, 450), (600, 550), (750, 550), (750, 500), (650, 500), (650, 450), (750, 450), (750, 400),
+            (550, 450), (600, 450), (600, 550), (750, 550), (750, 490), (650, 490), (650, 450), (750, 450), (750, 400),
             (800, 400), (800, 600), (500, 600), (500, 550), (550, 550)
         ]
     ],
@@ -173,7 +173,7 @@ def should_score(world_nr, player_rect):
     score = 0
     for scrap in room["scrap"]:
         if not player_rect.colliderect(scrap):
-            new_scrap_coords.append(scrap.topleft)
+            new_scrap_coords.append(scrap.center)
 
         else:
             score = score + 10
@@ -197,8 +197,12 @@ def get_next_room(room, x, y):
         return room[0] - 1, room[1]
 
 
-def move_player_to_next_room(x, y):
-    if x >= 800:
+def move_player_to_next_room(room, x, y):
+    if room == (0, 0) and x <= 0:
+        return 50, 50
+    elif room == (1, 0) and x <= 0:
+        return 150, 275
+    elif x >= 800:
         return 10, y
     elif x <= 0:
         return 790, y
@@ -217,14 +221,15 @@ def get_surface(room):
 
     if "ellipses" in room:
         for ellipse in room["ellipses"]:
-            pygame.draw.ellipse(surface, beige, ellipse)
+            transparent_beige = (beige[0], beige[1], beige[2], 0)
+            pygame.draw.ellipse(surface, transparent_beige, ellipse)
 
     for scrap_center in room["scrap_pile_coords"]:
         scrap = pygame.image.load(f"resources/mutter/mutter_{mutter_i}.png")
 
         scrap.set_colorkey(beige)
         scrap_rect = scrap.get_rect()
-        scrap_rect.x, scrap_rect.y = scrap_center
+        scrap_rect.center = scrap_center
 
         room["scrap"].append(scrap_rect)
         surface.blit(scrap, scrap_rect)

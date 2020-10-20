@@ -44,8 +44,9 @@ def main():
             player_y = new_player_y
 
         if player_x not in range(800) or player_y not in range(600):
+            old_room = room
             room = get_next_room(room, player_x, player_y)
-            player_x, player_y = move_player_to_next_room(player_x, player_y)
+            player_x, player_y = move_player_to_next_room(old_room, player_x, player_y)
 
         screen.fill((beige[0], beige[1], beige[2], 0))
         screen.blit(room_surface, (0, 0))
