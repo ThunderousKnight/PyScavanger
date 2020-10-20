@@ -20,7 +20,7 @@ def main():
     player = pygame.surface.Surface(size)
     world = get_world()
     room = (1, 1)
-    score = 0
+    scoreNmr = 0
 
     while True:
         for event in pygame.event.get():
@@ -37,7 +37,7 @@ def main():
         new_player_y = player_y + y_change
         room_surface = world[room[0]][room[1]]
 
-        score += should_score(room, get_player_rect(new_player_x, new_player_y))
+        scoreNmr += should_score(room, get_player_rect(new_player_x, new_player_y))
         print(score)
 
         if not collide(room_surface, draw_player(new_player_x, new_player_y, player)):
@@ -52,6 +52,7 @@ def main():
         screen.blit(room_surface, (0, 0))
         player = draw_player(player_x, player_y, player)
         screen.blit(player, (0, 0))
+        score(scoreNmr, screen)
         pygame.display.flip()
         world = update_world()
         clock.tick(60)

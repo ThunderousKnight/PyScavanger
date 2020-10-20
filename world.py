@@ -176,7 +176,7 @@ def should_score(world_nr, player_rect):
             new_scrap_coords.append(scrap.topleft)
 
         else:
-            score = score + 1
+            score = score + 10
 
     room["scrap_pile_coords"] = new_scrap_coords
     return score
