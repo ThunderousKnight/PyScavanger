@@ -38,7 +38,6 @@ def main():
         room_surface = world[room[0]][room[1]]
 
         scoreNmr += should_score(room, get_player_rect(new_player_x, new_player_y))
-        print(score)
 
         if not collide(room_surface, draw_player(new_player_x, new_player_y, player)):
             player_x = new_player_x

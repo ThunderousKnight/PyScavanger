@@ -34,13 +34,13 @@ def get_player_rect(x, y):
 
 def player_move(key, xy):
     if key == pygame.K_a:
-        return -5,xy[1]
+        return -7,xy[1]
     elif key == pygame.K_d:
-        return 5,xy[1]
+        return 7,xy[1]
     elif key == pygame.K_w:
-        return xy[0],-5
+        return xy[0],-7
     elif key == pygame.K_s:
-        return xy[0],5
+        return xy[0],7
     else:
         return xy[0], xy[1]
 
