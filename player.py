@@ -25,23 +25,30 @@ def draw_player(x, y, screen):
     return screen
 
 
+def get_player_rect(x, y):
+    player = playerimg.get_rect()
+    player.x = x
+    player.y = y
+    return player
+
+
 def player_move(key, xy):
-    if key == pygame.K_LEFT:
+    if key == pygame.K_a:
         return -5,xy[1]
-    elif key == pygame.K_RIGHT:
+    elif key == pygame.K_d:
         return 5,xy[1]
-    elif key == pygame.K_UP:
+    elif key == pygame.K_w:
         return xy[0],-5
-    elif key == pygame.K_DOWN:
+    elif key == pygame.K_s:
         return xy[0],5
     else:
         return xy[0], xy[1]
 
 
 def player_movit(key, xy):
-    if key == pygame.K_LEFT or key == pygame.K_RIGHT:
+    if key == pygame.K_a or key == pygame.K_d:
         return 0, xy[1]
-    elif key == pygame.K_UP or key == pygame.K_DOWN:
+    elif key == pygame.K_w or key == pygame.K_s:
         return xy[0], 0
     else:
         return xy[0], xy[1]

@@ -17,6 +17,7 @@ def main():
     player = pygame.surface.Surface(size)
     world = get_world()
     clock = pygame.time.Clock()
+    scoreNmr = 0
 
     while True:
         for event in pygame.event.get():
@@ -31,21 +32,25 @@ def main():
         
         if screen_width - 25 > player_x + x_change > -5:
             new_player_x = player_x + x_change
+
+            scoreNmr += should_score((0, 0), get_player_rect(new_player_x, player_y))
             if not collide(world[0][0], draw_player(new_player_x, player_y, player)):
                 player_x = new_player_x
         
-        if screen_height - 45 > player_y + y_change > -5 and not collide(world[0][0], player):
+        if screen_height - 45 > player_y + y_change > -5:
             new_player_y = player_y + y_change
+
+            scoreNmr += should_score((0, 0), get_player_rect(player_x, new_player_y))
             if not collide(world[0][0], draw_player(player_x, new_player_y, player)):
                 player_y = new_player_y
 
+        screen.fill((beige[0], beige[1], beige[2], 0))
         screen.blit(world[0][0], (0, 0))
         player = draw_player(player_x, player_y, player)
         screen.blit(player, (0, 0))
-        score(5, screen)
+        score(scoreNmr, screen)
         pygame.display.flip()
         world = update_world()
-        screen.fill((beige[0], beige[1], beige[2], 0))
         clock.tick(60)
 
 
