@@ -179,8 +179,33 @@ def should_score(world_nr, player_rect):
             score = score + 1
 
     room["scrap_pile_coords"] = new_scrap_coords
-    print(len(room["scrap_pile_coords"]))
     return score
+
+
+def get_next_room(room, x, y):
+    if room == (0, 0) and x <= 0:
+        return 1, 0
+    elif room == (1, 0) and x <= 0:
+        return 0, 0
+    elif x >= 800:
+        return room[0], room[1] + 1
+    elif x <= 0:
+        return room[0], room[1] - 1
+    elif y >= 600:
+        return room[0] + 1, room[1]
+    elif y <= 0:
+        return room[0] - 1, room[1]
+
+
+def move_player_to_next_room(x, y):
+    if x >= 800:
+        return 10, y
+    elif x <= 0:
+        return 790, y
+    elif y >= 600:
+        return x, 10
+    elif y <= 0:
+        return x, 590
 
 
 def get_surface(room):
