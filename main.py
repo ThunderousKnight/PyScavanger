@@ -14,6 +14,7 @@ def main():
     screen = pygame.display.set_mode(size)
     screen.set_colorkey(beige)
     screen.fill(beige)
+    pygame.display.set_caption("PyScavanger")
 
     clock = pygame.time.Clock()
 
